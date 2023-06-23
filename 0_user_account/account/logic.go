@@ -20,9 +20,31 @@ func NewService(repo Repository, logger log.Logger) service{
 	}
 }
 
-func (s service) CreateUser(){
-	
+func (s service) CreateUser(ctx context.Context, email string, password string) (string, error) {
+	logger := log.With(s.logger, "method", "CreateUser")
+	uuid, _ := uuid.NewV4()
+	id := uuid.String()
+	user := User{
+		ID: id,
+		Email: email,
+		Password: password,
+	}
+	if err := s.repository.CreateUser(ctx, user); err != nil{
+		level.Error(logger).Log("err",err)
+		return "", err
+	}
+	logger.Log("create user", id)
+	return "Success", nil
 }
-func (s service) GetUser(){
-	
+
+func (s service) GetUser(ctx context.Context, id string) (string, error) {
+	logger := log.With(s.logger, "method", "GetUser")
+	email, err := s.repository.GetUser(ctx, id)
+	if err != nil {
+		level.Error(logger).Log("err", err)
+		return "", err
+	}
+
+	logger.Log("Get User", id)
+	return email, nil
 }
