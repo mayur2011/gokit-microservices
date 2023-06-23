@@ -31,6 +31,20 @@ func encodeResponse(ctx context.Context, w http.ResponseWriter, response interfa
 	return json.NewEncoder(w).Encode(response)
 }
 
-func decodeUserReq(ctx context.Context, r *http.Request) (interface{}, error) {}
+func decodeUserReq(ctx context.Context, r *http.Request) (interface{}, error) {
+	var req CreateUserRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
 
-func decondeEmailReq(ctx context.Context, r *http.Request) (interface{}, error) {}
+func decondeEmailReq(ctx context.Context, r *http.Request) (interface{}, error) {
+	var req GetUserRequest
+	vars := mux.Vars(r)
+	req = GetUserRequest{
+		Id : vars["id"],
+	}
+	return req, nil
+}
