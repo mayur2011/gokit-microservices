@@ -1,3 +1,9 @@
+/*
+This Repository file is responsible for defining repository struct which will have db pointer and logger, this repo will have methods to help us interacting with Database operations.
+Example CreateUser method has Insert into statement whereas GetUser method has Select statement.
+Also, NewRepo.. function will allow us to give a concrete implementation of repository having db pointer to perform all db operations.
+*/
+
 package account
 
 import (
