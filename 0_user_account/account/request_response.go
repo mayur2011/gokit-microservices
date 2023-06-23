@@ -10,7 +10,7 @@ import (
 
 type (
 	CreateUserRequest struct {
-		Email string `json:"email"`
+		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
 
@@ -40,11 +40,11 @@ func decodeUserReq(ctx context.Context, r *http.Request) (interface{}, error) {
 	return req, nil
 }
 
-func decondeEmailReq(ctx context.Context, r *http.Request) (interface{}, error) {
+func decodeEmailReq(ctx context.Context, r *http.Request) (interface{}, error) {
 	var req GetUserRequest
 	vars := mux.Vars(r)
 	req = GetUserRequest{
-		Id : vars["id"],
+		Id: vars["id"],
 	}
 	return req, nil
 }
