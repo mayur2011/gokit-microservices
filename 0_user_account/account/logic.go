@@ -1,3 +1,8 @@
+/* This file is responsible for the implementation of Service interface, that is the reason type service struct (with lowercase s), It has all the necessary business logic for our Service methods like CreateUser is creating a user with unique id and GetUser is fetching the user info (email) from backend from given id.
+This file is performing all the necessary interaction with backend using repository interface methods that's the reason repository is part of service struct.
+logger is to help us to log the necessary messages.
+*/
+
 package account
 
 import (
@@ -8,7 +13,7 @@ import (
 	"github.com/gofrs/uuid"
 )
 
-type service interface {
+type service struct {
 	repository Repository 
 	logger log.Logger
 }
