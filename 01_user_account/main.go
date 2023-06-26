@@ -17,7 +17,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"gokit-microservices/0_user_account/account"
+	"gokit-microservices/01_user_account/account"
 )
 
 const dbsource = "postgresql://admin:pwd@123@localhost:5432/postgres?sslmode=disable"
