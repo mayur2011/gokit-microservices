@@ -14,6 +14,10 @@ var ErrEmpty = errors.New("string empty")
 
 type stringService struct{}
 
+func NewStringService() stringService {
+	return stringService{}
+}
+
 func (stringService) Uppercase(s string) (string, error) {
 	if s == "" {
 		return "", ErrEmpty
