@@ -34,7 +34,7 @@ func (repo *repository) GetCustomerByID(_ context.Context, id string) (customer.
 		customerDoc = repo.store[id]
 		return customerDoc, nil
 	}
-	return customerDoc, errors.New("customer does not exist for given id=" + id)
+	return customerDoc, customer.ErrCustomerNotFound
 }
 
 func (repo *repository) DeleteCustomer(_ context.Context, id string) (string, error) {
@@ -42,7 +42,7 @@ func (repo *repository) DeleteCustomer(_ context.Context, id string) (string, er
 		delete(repo.store, id)
 		return "Success", nil
 	}
-	return "Fail", errors.New("customer does not exist for given id=" + id)
+	return "Fail", customer.ErrCustomerNotFound
 }
 
 //local function to check customer exists
