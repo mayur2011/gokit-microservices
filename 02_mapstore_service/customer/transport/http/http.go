@@ -16,18 +16,18 @@ import (
 var ErrRouting = errors.New("bad routing")
 
 // wiring Go kit endpoints to the HTTP transport
-func NewService(endpoints transport.Endpoints, options []khttp.ServerOption, logger log.Logger) http.Handler {
+func NewService(endpoints transport.Endpoints, logger log.Logger) http.Handler {
 
 	var (
-		r           = mux.NewRouter()
-		errorLogger = khttp.ServerErrorLogger(logger)
-		//errorEncoder = khttp.ServerErrorEncoder(encodeErrorResponse)
+		r = mux.NewRouter()
+		//errorLogger = khttp.ServerErrorLogger(logger)
+		//errorEncoder = khttp.ServerErrorEncoder(nil)
 	)
-	options = append(options, errorLogger)
+	//options = append(options, errorLogger)
 
-	r.Methods("POST").Path("/customer/create").Handler(khttp.NewServer(endpoints.Create, decodeCreateRequest, encodeRespose, options...))
-	r.Methods("GET").Path("/customer/{id}").Handler(khttp.NewServer(endpoints.GetByID, decodeGetByIDRequest, encodeRespose, options...))
-	r.Methods("DELETE").Path("customer/{id}").Handler(khttp.NewServer(endpoints.Delete, decodeDeleteRequest, encodeRespose, options...))
+	r.Methods("POST").Path("/customer/create").Handler(khttp.NewServer(endpoints.Create, decodeCreateRequest, encodeRespose))
+	r.Methods("GET").Path("/customer/{id}").Handler(khttp.NewServer(endpoints.GetByID, decodeGetByIDRequest, encodeRespose))
+	r.Methods("DELETE").Path("customer/{id}").Handler(khttp.NewServer(endpoints.Delete, decodeDeleteRequest, encodeRespose))
 
 	return r
 }
