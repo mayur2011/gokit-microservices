@@ -1,6 +1,9 @@
 package customer
 
-import "errors"
+import (
+	"context"
+	"errors"
+)
 
 var (
 	ErrCustomerNotFound = errors.New("customer not found")
@@ -9,7 +12,7 @@ var (
 )
 
 type CustomerService interface {
-	Create(Customer) (string, error)
-	GetByID(string) (Customer, error)
-	Delete(string) (string, error)
+	Create(context.Context, Customer) (string, error)
+	GetByID(context.Context, string) (Customer, error)
+	Delete(context.Context, string) (string, error)
 }

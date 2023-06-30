@@ -23,5 +23,5 @@ type Address struct {
 type Repository interface {
 	CreateCustomer(context.Context, Customer) error
 	GetCustomerByID(context.Context, string) (Customer, error)
-	DeleteCustomer(context.Context, string) (string, error)
+	DeleteCustomer(context.Context, string) error
 }

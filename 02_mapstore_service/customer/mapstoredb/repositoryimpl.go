@@ -3,6 +3,7 @@ package mapstoredb
 import (
 	"context"
 	"errors"
+	"fmt"
 	"gokit-microservices/02_mapstore_service/customer"
 
 	"github.com/go-kit/log"
@@ -22,7 +23,7 @@ func NewRepository(logger log.Logger) (customer.Repository, error) {
 
 func (repo *repository) CreateCustomer(_ context.Context, cust customer.Customer) error {
 	if repo.isCustomerExist(cust.ID) {
-		return errors.New("customer already created for given id =" + cust.ID)
+		return errors.New("customer exist for ID =" + cust.ID)
 	}
 	repo.store[cust.ID] = cust
 	return nil
@@ -37,12 +38,12 @@ func (repo *repository) GetCustomerByID(_ context.Context, id string) (customer.
 	return customerDoc, customer.ErrCustomerNotFound
 }
 
-func (repo *repository) DeleteCustomer(_ context.Context, id string) (string, error) {
+func (repo *repository) DeleteCustomer(_ context.Context, id string) error {
 	if repo.isCustomerExist(id) {
 		delete(repo.store, id)
-		return "Success", nil
+		return nil
 	}
-	return "Fail", customer.ErrCustomerNotFound
+	return fmt.Errorf("customer not found")
 }
 
 //local function to check customer exists
