@@ -25,34 +25,34 @@ func NewEndpoints(svc customer.CustomerService) Endpoints {
 // makeEndpoint func accept service as input and expose Endpoint type
 func makeCreateEndpoint(svc customer.CustomerService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(createRequest)
+		req := request.(CreateRequest)
 		result, err := svc.Create(ctx, req.Customer)
 		if err != nil {
-			return createResponse{"", err}, err
+			return CreateResponse{"", err}, err
 		}
-		return createResponse{result, nil}, nil
+		return CreateResponse{result, nil}, nil
 	}
 }
 
 func makeGetByIDEndpoint(svc customer.CustomerService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(getByIDRequest)
+		req := request.(GetByIDRequest)
 		result, err := svc.GetByID(ctx, req.ID)
 		if err != nil {
-			return getByIDResponse{customer.Customer{}, err}, err
+			return GetByIDResponse{customer.Customer{}, err}, err
 		}
-		return getByIDResponse{result, nil}, nil
+		return GetByIDResponse{result, nil}, nil
 	}
 }
 
 func makeDeleteEndpoint(svc customer.CustomerService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(deleteRequest)
+		req := request.(DeleteRequest)
 		result, err := svc.Delete(ctx, req.ID)
 		if err != nil {
-			return deleteResponse{"", err}, err
+			return DeleteResponse{"", err}, err
 		}
-		return deleteResponse{result, nil}, nil
+		return DeleteResponse{result, nil}, nil
 	}
 }
 
